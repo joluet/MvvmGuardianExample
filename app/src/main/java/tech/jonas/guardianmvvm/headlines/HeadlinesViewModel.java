@@ -1,7 +1,9 @@
 package tech.jonas.guardianmvvm.headlines;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
@@ -12,6 +14,9 @@ import tech.jonas.guardianmvvm.common.mvvm.ViewModel;
 
 public class HeadlinesViewModel implements ViewModel {
 
+    public static final String DATE_FORMAT_STRING = "dd/MM/YYYY";
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT_STRING, Locale.ENGLISH);
+
     public final Single<List<ViewModel>> headlineViewModels;
 
     public HeadlinesViewModel(final GuardianApiService guardianApiService, @IoScheduler Scheduler ioScheduler) {
@@ -20,7 +25,8 @@ public class HeadlinesViewModel implements ViewModel {
                 .map(searchResponse -> {
                     List<ViewModel> vms = new ArrayList<>();
                     for (SearchResult searchResult : searchResponse.results) {
-                        vms.add(new HeadlineViewModel(searchResult));
+                        final String formattedDate = DATE_FORMAT.format(searchResult.publicationDate);
+                        vms.add(new HeadlineViewModel(searchResult.title, formattedDate, searchResult.imageUrl));
                     }
                     return vms;
                 });

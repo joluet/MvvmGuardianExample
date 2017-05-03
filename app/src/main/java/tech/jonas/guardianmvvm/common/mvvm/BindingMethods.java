@@ -7,11 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
+import tech.jonas.guardianmvvm.common.util.CropCircleTransformation;
 
 public class BindingMethods {
 
@@ -30,6 +33,14 @@ public class BindingMethods {
             adapter = null;
         }
         bindAdapter(recyclerView, adapter);
+    }
+
+    @BindingAdapter({"image_url"})
+    public static void bindAdapterWithDefaultBinder(@NonNull ImageView imageView, @NonNull String imageUrl) {
+        Glide.with(imageView.getContext())
+                .load(imageUrl)
+                .transform(new CropCircleTransformation(imageView.getContext()))
+                .into(imageView);
     }
 
     @BindingConversion

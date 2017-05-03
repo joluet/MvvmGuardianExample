@@ -6,9 +6,9 @@ import tech.jonas.guardianmvvm.common.guardian_api.model.SearchResult;
 
 public class SearchResponseJson {
 
-    public final List<SearchResult> results;
+    public final List<SearchResultJson> results;
 
-    public SearchResponseJson(final List<SearchResult> results) {
+    public SearchResponseJson(final List<SearchResultJson> results) {
         this.results = results;
     }
 }

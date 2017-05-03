@@ -7,6 +7,6 @@ import tech.jonas.guardianmvvm.common.guardian_api.model.SearchResponse;
 
 public interface GuardianApiService {
 
-    @GET("search")
+    @GET("search?show-fields=thumbnail")
     Single<SearchResponse> search(@Query("q") String query);
 }
