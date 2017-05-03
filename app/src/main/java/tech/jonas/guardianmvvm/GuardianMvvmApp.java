@@ -2,14 +2,13 @@ package tech.jonas.guardianmvvm;
 
 import android.app.Application;
 import android.content.Context;
-import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
+
+import com.squareup.leakcanary.LeakCanary;
 
 import tech.jonas.guardianmvvm.common.injection.application.ApplicationComponent;
 import tech.jonas.guardianmvvm.common.injection.application.ApplicationModule;
 import tech.jonas.guardianmvvm.common.injection.application.DaggerApplicationComponent;
-import tech.jonas.guardianmvvm.common.mvvm.ViewModel;
-import tech.jonas.guardianmvvm.common.mvvm.ViewModelBinder;
 
 public class GuardianMvvmApp extends Application {
 
@@ -18,6 +17,10 @@ public class GuardianMvvmApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     protected ApplicationComponent createComponent() {
