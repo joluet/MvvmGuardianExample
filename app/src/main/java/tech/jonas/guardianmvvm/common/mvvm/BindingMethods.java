@@ -20,7 +20,9 @@ public class BindingMethods {
 
     @BindingAdapter("adapter")
     public static void bindAdapter(@NonNull RecyclerView recyclerView, @Nullable RecyclerView.Adapter adapter) {
-        recyclerView.setAdapter(adapter);
+        if (adapter != null) {
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     @BindingAdapter({"items", "view_provider"})
